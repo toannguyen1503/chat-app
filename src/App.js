@@ -1,9 +1,10 @@
-import './App.css';
-import Login from './components/Login';
-import ChatRoom from './components/ChatRoom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import AuthProvider from './Context/AuthProvider';
+import './App.css';
+import ChatRoom from './components/ChatRoom';
+import Login from './components/Login';
+import AddRoomModal from './components/Modals/AddRoomModal';
 import AppProvider from './Context/AppProvider';
+import AuthProvider from './Context/AuthProvider';
 function App() {
     return (
         <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
                         <Route component={Login} path="/login"></Route>
                         <Route component={ChatRoom} path="/"></Route>
                     </Switch>
+                    <AddRoomModal/>
                 </AppProvider>
             </AuthProvider>
         </BrowserRouter>

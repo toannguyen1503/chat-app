@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useFireStore from '../hooks/useFireStore';
 import { AuthContext } from './AuthProvider';
 
 export const AppContext = React.createContext();
 
 export default function AppProvider({ children }) {
+    const [isAddRoomVisible, setIsAddRoomVisible] = useState(false);
+
     const {
         user: { uid },
     } = React.useContext(AuthContext);
@@ -18,8 +20,11 @@ export default function AppProvider({ children }) {
     }, [uid]);
     // roomCondition chỉ bị thay đổi khi uid bị thay đổi
     const rooms = useFireStore('rooms', roomsCondition);
-    console.log({ rooms });
     return (
-        <AppContext.Provider value={{ rooms }}>{children}</AppContext.Provider>
+        <AppContext.Provider
+            value={{ rooms, isAddRoomVisible, setIsAddRoomVisible }}
+        >
+            {children}
+        </AppContext.Provider>
     );
 }
