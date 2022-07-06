@@ -1,8 +1,8 @@
 import { Avatar, Button, Typography } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
-import { auth, db } from '../firebase/config';
 import { AuthContext } from '../../Context/AuthProvider';
+import { auth } from '../firebase/config';
 const WrapperStyled = styled.div`
     display: flex;
     justify-content: space-between;
@@ -16,16 +16,7 @@ const WrapperStyled = styled.div`
 `;
 
 export default function UserInfo() {
-    // React.useEffect(() => {
-    //     db.collection('users').onSnapshot((snapshot) => {
-    //         const data = snapshot.docs.map((doc) => ({
-    //             ...doc.data(),
-    //             id: doc.id,
-    //         }));
-
-    //         console.log({ data, snapshot, docs: snapshot.docs });
-    //     });
-    // }, []);
+    
 
     const {
         user: { displayName, photoUrl },
