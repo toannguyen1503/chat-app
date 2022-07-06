@@ -1,7 +1,8 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { Avatar, Button, Form, Input, Tooltip } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { AppContext } from '../../Context/AppProvider';
 import Message from './Message';
 
 const HeaderStyled = styled.div`
@@ -62,16 +63,18 @@ const FormStyled = styled(Form)`
 const MessageListStyled = styled.div`
     max-height: 100%;
     overflow-y: auto;
-
 `;
 
 export default function ChatWindow() {
+    const {selectedRoom } = useContext(AppContext);
+    
+    
     return (
         <WrapperStyled>
             <HeaderStyled>
                 <div className="header__info">
-                    <p className="header__title">Room 1</p>
-                    <span className="header__description">Day la room 1</span>
+                    <p className="header__title">{selectedRoom.name}</p>
+                    <span className="header__description">{selectedRoom.description}</span>
                 </div>
                 <ButtonGroupStyled>
                     <Button icon={<UserAddOutlined />} type="text">
@@ -122,7 +125,7 @@ export default function ChatWindow() {
                             autoComplete="off"
                         />
                     </Form.Item>
-                    <Button type='primary'>Gửi</Button>
+                    <Button type="primary">Gửi</Button>
                 </FormStyled>
             </ContentStyled>
         </WrapperStyled>
