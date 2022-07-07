@@ -1,20 +1,23 @@
 import { Button, Col, Row, Typography } from 'antd';
 import firebase, { auth } from '../firebase/config';
-import { addDocument } from '../firebase/service';
+import { addDocument, generateKeywords } from '../firebase/service';
 const { Title } = Typography;
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 
 export default function Login() {
     const handleFbLogin = async () => {
-        const { additionalUserInfo, user } = await auth.signInWithPopup(fbProvider);
+        const { additionalUserInfo, user } = await auth.signInWithPopup(
+            fbProvider
+        );
 
         if (additionalUserInfo?.isNewUser) {
             addDocument('users', {
                 displayName: user.displayName,
                 email: user.email,
-                photoUrl: user.photoURL,
+                photoURL: user.photoURL,
                 uid: user.uid,
                 providerId: additionalUserInfo.providerId,
+                keywords: generateKeywords(user.displayName?.toLowerCase()),
             });
         }
     };

@@ -6,7 +6,9 @@ export const AppContext = React.createContext();
 
 export default function AppProvider({ children }) {
     const [isAddRoomVisible, setIsAddRoomVisible] = useState(false);
+    const [isInviteMemberVisible, setIsInviteMemberVisible] = useState(false);
     const [selectedRoomId, setSelectedRoomId] = useState('');
+
     const {
         user: { uid },
     } = React.useContext(AuthContext);
@@ -18,13 +20,14 @@ export default function AppProvider({ children }) {
             compareValue: uid,
         };
     }, [uid]);
-    // roomCondition chỉ bị thay đổi khi uid bị thay đổi
+
     const rooms = useFireStore('rooms', roomsCondition);
 
-    const selectedRoom = React.useMemo(() => 
-        rooms.find((room) => room.id === selectedRoomId )|| {},
-    [rooms, selectedRoomId]);
-    
+    const selectedRoom = React.useMemo(
+        () => rooms.find((room) => room.id === selectedRoomId) || {},
+        [rooms, selectedRoomId]
+    );
+
     const usersCondition = React.useMemo(() => {
         return {
             fieldName: 'uid',
@@ -32,17 +35,28 @@ export default function AppProvider({ children }) {
             compareValue: selectedRoom.members,
         };
     }, [selectedRoom.members]);
-    const members = useFireStore('users',usersCondition);
-    console.log(members);
+
+    const members = useFireStore('users', usersCondition);
+
+    const clearState = () => {
+        setSelectedRoomId('');
+        setIsAddRoomVisible(false);
+        setIsInviteMemberVisible(false);
+    };
+
     return (
         <AppContext.Provider
             value={{
                 rooms,
+                members,
+                selectedRoom,
                 isAddRoomVisible,
                 setIsAddRoomVisible,
                 selectedRoomId,
-                selectedRoom,
                 setSelectedRoomId,
+                isInviteMemberVisible,
+                setIsInviteMemberVisible,
+                clearState,
             }}
         >
             {children}
