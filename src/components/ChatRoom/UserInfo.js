@@ -1,8 +1,10 @@
 import { Avatar, Button, Typography } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+import { AppContext } from '../../Context/AppProvider';
 import { AuthContext } from '../../Context/AuthProvider';
 import { auth } from '../firebase/config';
+
 const WrapperStyled = styled.div`
     display: flex;
     justify-content: space-between;
@@ -16,11 +18,10 @@ const WrapperStyled = styled.div`
 `;
 
 export default function UserInfo() {
-    
-
     const {
         user: { displayName, photoUrl },
     } = React.useContext(AuthContext);
+    const { clearState } = React.useContext(AppContext);
     return (
         <WrapperStyled>
             <div>
@@ -31,7 +32,14 @@ export default function UserInfo() {
                     {displayName}
                 </Typography.Text>
             </div>
-            <Button ghost onClick={() => auth.signOut()}>
+            <Button
+                ghost
+                onClick={() => {
+                    // clear state in AppProvide.js when user log-out
+                    clearState();
+                    auth.signOut();
+                }}
+            >
                 Đăng xuất
             </Button>
         </WrapperStyled>

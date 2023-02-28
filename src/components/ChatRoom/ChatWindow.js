@@ -117,10 +117,11 @@ export default function ChatWindow() {
                                 icon={<UserAddOutlined />}
                                 type="text"
                                 onClick={() => setIsInviteMemberVisible(true)}
+                                style={{background:'grey', margin:'10px 5px',}}
                             >
                                 Mời
                             </Button>
-                            <Avatar.Group size="small" maxCount={2}>
+                            <Avatar.Group size="small" maxCount={2} style={{margin:'12px 5px'}}>
                                 {members.map((member) => (
                                     <Tooltip
                                         title={member.displayName}

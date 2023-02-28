@@ -3,11 +3,11 @@ import firebase, { auth } from '../firebase/config';
 import { addDocument, generateKeywords } from '../firebase/service';
 const { Title } = Typography;
 const fbProvider = new firebase.auth.FacebookAuthProvider();
-
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 export default function Login() {
-    const handleFbLogin = async () => {
+    const handleLogin = async (provider) => {
         const { additionalUserInfo, user } = await auth.signInWithPopup(
-            fbProvider
+            provider
         );
 
         if (additionalUserInfo?.isNewUser) {
@@ -28,10 +28,16 @@ export default function Login() {
                     <Title style={{ textAlign: 'center' }} level={3}>
                         FUN CHAT
                     </Title>
-                    <Button style={{ width: '100%', marginBottom: 5 }}>
+                    <Button
+                        style={{ width: '100%', marginBottom: 5 }}
+                        onClick={() => handleLogin(googleProvider)}
+                    >
                         Đăng nhập bằng Google
                     </Button>
-                    <Button style={{ width: '100%' }} onClick={handleFbLogin}>
+                    <Button
+                        style={{ width: '100%' }}
+                        onClick={() => handleLogin(fbProvider)}
+                    >
                         Đăng nhập bằng Facebook
                     </Button>
                 </Col>

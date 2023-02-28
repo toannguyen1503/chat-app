@@ -6,11 +6,10 @@ import { db } from '../firebase/config';
 
 function DebounceSelect({
     fetchOptions,
-    debounceTimeout = 300,
+    debounceTimeout = 500,
     curMembers,
     ...props
 }) {
-    // Search: abcddassdfasdf
 
     const [fetching, setFetching] = useState(false);
     const [options, setOptions] = useState([]);
